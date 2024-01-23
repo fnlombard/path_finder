@@ -1,6 +1,7 @@
 from collections import deque
 from dataclasses import dataclass
 from enum import Enum, auto
+from pathlib import Path
 from random import randint
 from typing import List, TypeAlias
 import time
@@ -55,6 +56,12 @@ class GridGenerator:
         grid[self.goal.x][self.goal.y] = Element.EMPTY
 
         return grid
+
+    def new_mock() -> Grid:
+        return [
+            [Element.BLOCK if character == "#" else Element.EMPTY for character in line]
+            for line in Path("fake_grid").read_text("utf-8").strip().split("\n")
+        ]
 
     def is_path_available(self, grid: Grid) -> bool:
         attempts = 0
